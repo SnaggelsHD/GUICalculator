@@ -214,8 +214,9 @@ public class MyFrame extends JFrame{
         calculate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Calculations calculation = new Calculations(outputString);
-                output.setText("" + calculation.displayText);
+                CalculationMachine calculation = new CalculationMachine(outputString);
+                calculation.stringToNumber();
+                //output.setText("" + calculation.displayText);
             }
         });
 
