@@ -1,0 +1,6 @@
+public interface CalculationsInterface {
+	int addition();
+	int substraction();
+	int multiplication();
+	int division();
+}
