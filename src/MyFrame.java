@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 public class MyFrame extends JFrame{
     public String outputString = "";
+    public boolean solutionDisplay = false;
     MyFrame() {
 		Border border = BorderFactory.createLineBorder(Color.black, 3);
 		
@@ -177,10 +178,15 @@ public class MyFrame extends JFrame{
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!outputString.isEmpty()) {
-                    outputString = outputString.substring(0, outputString.length() - 1);
+                if(!solutionDisplay) {
+                    if(!outputString.isEmpty()) {
+                        outputString = outputString.substring(0, outputString.length() - 1);
+                    }
+                    output.setText(outputString);
+                } else {
+                    outputString = "";
+                    output.setText(outputString);
                 }
-                output.setText(outputString);
             }
         });
         addition.addActionListener(new ActionListener() {
@@ -215,7 +221,8 @@ public class MyFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 CalculationMachine calculation = new CalculationMachine(outputString);
-                output.setText("");
+                output.setText("Solution: " + calculation.calculateFloat());
+                solutionDisplay = true;
             }
         });
 
