@@ -1,10 +1,9 @@
+import java.util.ArrayList;
+
 public class CalculationMachine {
-	public float x;
-	public float y;
-	public char operator;
     public String inputString;
-    public String inputStringCopy;
-    public float solution;
+    ArrayList<Integer> numbers = new ArrayList<Integer>();
+    ArrayList<Character> operators = new ArrayList<Character>();
     
 	
     CalculationMachine(String inputString) {
@@ -13,29 +12,19 @@ public class CalculationMachine {
 
     // inputString = 10/2*100-2+30
     public void stringToNumber() {
-        /*for(int i = 0; i > inputString.length(); i++) {
-            inputStringCopy = inputString.substring(0, 1);
-            inputString = inputString.substring(1 , inputString.length() - 1);
-            System.out.println(inputStringCopy);
-        }*/
+        int fac = 1;
+        for(int i = 0; i > inputString.length(); i++) {
+            char characterIndex = inputString.charAt(i);
+            if(characterIndex == '+' || characterIndex == '-' || characterIndex == '*' || characterIndex == '/') {
+                operators.add(characterIndex);
+                fac = 1;
+            } else if(characterIndex == '1' || characterIndex == '2' || characterIndex == '3' || characterIndex == '4' || characterIndex == '5' || characterIndex == '6' || characterIndex == '7' || characterIndex == '8' || characterIndex == '9') {
+                int number = characterIndex - '0';
+                number *= fac;
+                fac *= 10;
+                numbers.add(number);
+            }
+        } 
     }
 
-    
-    public float calculate() {
-        switch (operator) {
-            case '+':
-                solution = x + y;
-            case '-':
-                solution = x - y;
-            case '*':
-                solution = x * y;
-            case '/':
-                solution = x / y;
-        }
-        return solution;
-    }
-
-    public float displayText() {
-        return x;
-    }
 }

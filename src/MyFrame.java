@@ -215,8 +215,7 @@ public class MyFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 CalculationMachine calculation = new CalculationMachine(outputString);
-                calculation.stringToNumber();
-                //output.setText("" + calculation.displayText);
+                output.setText("");
             }
         });
 
