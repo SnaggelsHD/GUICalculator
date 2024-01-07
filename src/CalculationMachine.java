@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class CalculationMachine {
     public String inputString;
+    private boolean lastDigitTest = true;
     ArrayList<Float> numbers = new ArrayList<Float>();
     ArrayList<Character> operators = new ArrayList<Character>();
     
@@ -15,6 +16,10 @@ public class CalculationMachine {
         float fac = 10;
         float fac2 = 1;
         boolean decimal = false;
+
+        if(inputString.isEmpty()) {
+            return;
+        }
 
         for(int i = 0; i < inputString.length(); i++) {
             char characterIndex = inputString.charAt(i);
@@ -36,7 +41,7 @@ public class CalculationMachine {
                 //Debug
                 //System.out.println("decimal true");
 
-            } else if(characterIndex == '+' || characterIndex == '-' || characterIndex == '*' || characterIndex == '/') {
+            } else if((characterIndex == '+' || characterIndex == '-' || characterIndex == '*' || characterIndex == '/') && i != inputString.length() - 1) {
                 char operator = characterIndex;
                 decimal = false;
                 fac = 10;
@@ -47,17 +52,41 @@ public class CalculationMachine {
 
                 //Debug
                 //System.out.println("operator saved");
+            } else if((characterIndex == '+' || characterIndex == '-' || characterIndex == '*' || characterIndex == '/') && i == inputString.length() - 1){
+                char operator = characterIndex;
+                decimal = false;
+                fac = 10;
+                fac2 = 1;
+                numbers.add(number);
+                number = 0;
+                operators.add(operator);
+                lastDigitTest = false;
             }
         }
-
-        numbers.add(number);
+        if(lastDigitTest) {
+            numbers.add(number);
+        }
+        
         //Debug
         //System.out.println("letzte zahl");
     }
 
-    public float calculateFloat() {
+    public String calculateFloat() {
 
         stringToNumber();
+        //DebugMethod
+        //listArray();
+
+        if(operators.isEmpty() && numbers.isEmpty()) {
+            return "Please insert a calculation!";
+        }
+
+        if(numbers.isEmpty() && !operators.isEmpty() || !lastDigitTest) {
+            return "Please insert a complete calculation!";
+        }
+        if(numbers.size() == 1 && operators.isEmpty()) {
+            return "The solution is: " + numbers.get(0);
+        }
 
         while(!operators.isEmpty()) {
             for(int i = 0; i < operators.size(); i++) {
@@ -68,10 +97,14 @@ public class CalculationMachine {
                     operators.remove(i);
 
                 } else if(operators.get(i) == '/') {
-                    float temp = numbers.get(i) / numbers.get(i + 1);
-                    numbers.set(i, temp);
-                    numbers.remove(i + 1);
-                    operators.remove(i);
+                    if(numbers.get(i + 1) != 0) {
+                        float temp = numbers.get(i) / numbers.get(i + 1);
+                        numbers.set(i, temp);
+                        numbers.remove(i + 1);
+                        operators.remove(i);
+                    } else {
+                       return "Please dont divide with zero!";
+                    }
                 }    
             }
             for(int i = 0; i < operators.size(); i++) {
@@ -89,15 +122,15 @@ public class CalculationMachine {
             }
         }
 
-        return numbers.get(0);
+        return "The solution is: " + numbers.get(0);
     }
     //Debug method to display the content of the Arraylists in console
-    /*public void listArray() {
+    public void listArray() {
         for (int i = 0; i < numbers.size(); i++) {
             System.out.println(numbers.get(i));
         }
         for (int i = 0; i < operators.size(); i++) {
             System.out.println(operators.get(i));
         }    
-    }*/
+    }
 }

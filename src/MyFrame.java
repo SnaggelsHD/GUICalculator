@@ -186,6 +186,7 @@ public class MyFrame extends JFrame{
                 } else {
                     outputString = "";
                     output.setText(outputString);
+                    solutionDisplay = false;
                 }
             }
         });
@@ -221,7 +222,7 @@ public class MyFrame extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 CalculationMachine calculation = new CalculationMachine(outputString);
-                output.setText("Solution: " + calculation.calculateFloat());
+                output.setText(calculation.calculateFloat());
                 solutionDisplay = true;
             }
         });
